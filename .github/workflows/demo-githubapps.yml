@@ -20,7 +20,7 @@ jobs:
 
       - name: Set Tag
         id: tag
-        run: echo "tag=abc1234" >> $GITHUB_ENV
+        run: echo "9.9.9" >> $GITHUB_ENV
 
       - name: Build the Docker image
         run: |
