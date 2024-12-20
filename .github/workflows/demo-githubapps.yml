@@ -23,7 +23,7 @@ jobs:
 
       - name: Build the Docker image
         run: |
-          docker build demo-project --file demo-project/Dockerfile --tag ghcr.io/gobamm/demo-project:latest
+          docker build . --file Dockerfile --tag ghcr.io/gobamm/demo-project:latest
           docker tag ghcr.io/gobamm/demo-project:latest ghcr.io/gobamm/demo-project:latest
 
       - name: Push Docker image
