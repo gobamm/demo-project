@@ -31,7 +31,7 @@ jobs:
       - name: Build the Docker image
         run: |  
           cd demo-project 
-          docker build . --file Dockerfile --tag ghcr.io/${{ github.repository }}:${{ steps.tag.outputs.tag }}
+          docker build . --file Dockerfile --tag ghcr.io/${{ github.repository }}:abc1234
           docker tag ghcr.io/${{ github.repository }}:abc1234 ghcr.io/${{ github.repository }}:latest
   
       # Log in to GitHub Container Registry
