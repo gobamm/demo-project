@@ -1,0 +1,35 @@
+name: Reusable Push to GHCR
+
+on:
+  workflow_dispatch:
+  workflow_call:
+    inputs:
+      image_name:
+        required: true
+        type: string
+    secrets:
+      APP_ID:
+        required: true
+      APP_PRIVATE_KEY:
+        required: true
+
+jobs:
+  push-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate GitHub App Token
+        id: app-token
+        uses: tibdex/github-app-token@v1
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - name: Log in to GitHub Container Registry
+        run: |
+          echo "${{ steps.app-token.outputs.token }}" | docker login ghcr.io -u GITHUB_APP --password-stdin
+
+      - name: Build and Push Docker Image
+        run: |
+          IMAGE=ghcr.io/${{ github.repository }}/${{ inputs.image_name }}:latest
+          docker build -t $IMAGE .
+          docker push $IMAGE
