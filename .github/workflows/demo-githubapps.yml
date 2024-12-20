@@ -18,10 +18,14 @@ jobs:
         run: |
           echo "${{ steps.app-token.outputs.token }}" | docker login ghcr.io -u GITHUB_APP --password-stdin
 
+      - name: Set Tag
+        id: tag
+        run: echo "tag=9.9.9" >> $GITHUB_ENV
+
       - name: Build the Docker image
         run: |
-          docker build ./demo-project --file ./demo-project/Dockerfile --tag ghcr.io/gobamm/demo-project
-          docker tag ghcr.io/gobamm/demo-project ghcr.io/gobamm/demo-project:latest
+          docker build ./demo-project --file ./demo-project/Dockerfile --tag ghcr.io/${{ github.repository }}
+          docker tag ghcr.io/${{ github.repository }} ghcr.io/${{ github.repository }}:latest
 
       - name: Push Docker image
         run: |
