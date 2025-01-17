@@ -22,8 +22,8 @@ jobs:
 
     - name: Install Playwright Browsers
       run: |
-      pwd
-      npx playwright install --with-deps
+        pwd
+        npx playwright install --with-deps
 
     - name: Run Playwright tests
       run: npx playwright test
