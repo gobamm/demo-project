@@ -22,11 +22,13 @@ jobs:
 
     - name: Install Playwright Browsers
       run: |
-        pwd
+        cd playwright
         npx playwright install --with-deps
 
     - name: Run Playwright tests
-      run: npx playwright test
+      run: |
+        cd playwright
+        npx playwright test
 
     - name: Upload test artifacts
       if: always() # Ensures artifacts are uploaded even if tests fail
