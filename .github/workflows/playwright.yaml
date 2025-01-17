@@ -1,0 +1,33 @@
+name: Test Play wright
+
+on:
+  workflow_dispatch:
+
+jobs:
+  playwright-test-dev:   
+    runs-on: ubuntu-latest
+    
+    steps:    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16' # Specify Node.js version
+
+    - name: Install dependencies
+      run: |
+        cd playwright
+        npm ci
+
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+
+    - name: Run Playwright tests
+      run: npx playwright test
+
+    - name: Upload test artifacts
+      if: always() # Ensures artifacts are uploaded even if tests fail
+      uses: actions/upload-artifact@v4
+      with:
+        name: playwright-report
+        path: playwright-report # Path to Playwright's test report directory
+
